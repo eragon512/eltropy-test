@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Table from 'semantic-ui-react/dist/es/collections/Table'
+import { Table } from 'semantic-ui-react'
 import ItemsTableHeader from './ItemsTableHeaderComponent'
 import ItemsTableBody from './ItemsTableBodyComponent'
 import ItemsTableFooter from './ItemsTableFooterComponent'

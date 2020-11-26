@@ -1,9 +1,11 @@
 const INITIAL_STATE = ''
 
 function searchReducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
+  const { type, payload={} } = action;
+  switch(type) {
     case 'UPDATE_SEARCH_TEXT':
-      return action.searchText.toLowerCase()
+      if (!payload.searchText && payload.searchText !== '') return state;
+      return payload.searchText;
     case 'RESET':
       return ''
     default:

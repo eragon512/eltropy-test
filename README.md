@@ -27,7 +27,7 @@ Implement a client-side application where it will be possible to add item name a
 + Webpack
 + Babel
 + [Semantic UI React/CSS](https://react.semantic-ui.com/usage)
-
++ Jest/Enzyme
 
 ## Setting up Local Environment
 
@@ -51,3 +51,17 @@ npm install
 3. To run the dev server, run the command: `npm run dev`
 
 This should launch the webpage and it should now be available at http://localhost:8080
+
+4. To run tests, run the command: `npm run test`
+To run tests in watch mode (rerun tests on file changes), run the command: `npm run test:watch`
+
+5. To take a development build of the bundle, run: `npm run build`
+To take a production build, run: `npm run build:prod`
+
+## Demo GIFs
+
++ CRUD Operations on the items
+![Screen-Recording-2020-11-27-at-4](https://user-images.githubusercontent.com/9765685/100395677-cb916400-3067-11eb-82f1-5595328d7914.gif)
+
++ Demo showing `localStorage`
+![Screen-Recording-2020-11-27-at-4(1)](https://user-images.githubusercontent.com/9765685/100395794-51adaa80-3068-11eb-9dcc-3f1524d1c969.gif)

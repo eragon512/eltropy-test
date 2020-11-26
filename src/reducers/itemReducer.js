@@ -1,41 +1,66 @@
 const INITIAL_STATE = []
 
 function itemReducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
+  const { type='', payload={} } = action;
+  switch(type) {
     case 'ADD_ITEM': 
       return state.concat({
-        label: action.label || 'Item'+Number(state.length+1).toString(),
-        count: action.count || 1,
-        isLabelEditable: action.isLabelEditable || true,
+        label: payload.label || 'Item'+Number(state.length+1).toString(),
+        count: payload.count || 1,
       });
     case 'REMOVE_ITEM':
+      if (typeof payload.index !== 'number' || payload.index < 0) return state;
       return []
-        .concat(state.slice(0, action.index))
-        .concat(state.slice(action.index+1))
+        .concat(state.slice(0, payload.index))
+        .concat(state.slice(payload.index+1))
     case 'ADD_TO_ITEM_COUNT':
+      if (
+        typeof payload.index !== 'number' || 
+        payload.index < 0 || 
+        typeof payload.addCount !== 'number'
+      ) {
+        return state;
+      }
+
       return []
-        .concat(state.slice(0, action.index))
+        .concat(state.slice(0, payload.index))
         .concat({
-          ...state[action.index],
-          count: state[action.index].count+action.addCount
+          ...state[payload.index],
+          count: state[payload.index].count + payload.addCount
         })
-        .concat(state.slice(action.index + 1))
+        .concat(state.slice(payload.index + 1))
     case 'CHANGE_ITEM_COUNT':
+      if (
+        typeof payload.index !== 'number' ||
+        payload.index < 0 ||
+        typeof payload.count !== 'number'
+      ) {
+        return state;
+      }
+
       return []
-        .concat(state.slice(0, action.index))
+        .concat(state.slice(0, payload.index))
         .concat({
-          ...state[action.index],
-          count: action.count,
+          ...state[payload.index],
+          count: payload.count,
         })
-        .concat(state.slice(action.index + 1))
+        .concat(state.slice(payload.index + 1))
     case 'CHANGE_ITEM_LABEL':
+      if (
+        typeof payload.index !== 'number' ||
+        payload.index < 0 ||
+        typeof payload.label !== 'string'
+      ) {
+        return state;
+      }
+
       return []
-        .concat(state.slice(0, action.index))
+        .concat(state.slice(0, payload.index))
         .concat({
-          ...state[action.index],
-          label: action.label
+          ...state[payload.index],
+          label: payload.label
         })
-        .concat(state.slice(action.index + 1))
+        .concat(state.slice(payload.index + 1))
     default:
       return state
   }

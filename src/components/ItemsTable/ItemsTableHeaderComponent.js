@@ -1,11 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Table from 'semantic-ui-react/dist/es/collections/Table'
-import Grid from 'semantic-ui-react/dist/es/collections/Grid'
-import Form from 'semantic-ui-react/dist/es/collections/Form'
-import Input from 'semantic-ui-react/dist/es/elements/Input'
-import Button from 'semantic-ui-react/dist/es/elements/Button'
-import Icon from 'semantic-ui-react/dist/es/elements/Icon'
+import { Table, Grid, Input, Button, Icon } from 'semantic-ui-react'
 
 function ItemsTableHeaderComponent(props) {
   const {
@@ -16,25 +11,27 @@ function ItemsTableHeaderComponent(props) {
 
   return (
     <Table.Header>
-      <Table.HeaderCell colSpan='12'>
-        <Grid>
-          <Grid.Column width={12}>
-            <Input
-              fluid
-              icon='search'
-              iconPosition='left'
-              placeholder='Search by Item Name...'
-              value={searchText}
-              onChange={(e) => changeSearchText(e.target.value)}
-            />
-          </Grid.Column>
-          <Grid.Column width={4} textAlign='right'>
-            <Button positive icon onClick={() => addItem()}>
-              <Icon name='add' /> &nbsp; Add
+      <tr>
+        <Table.HeaderCell colSpan='12'>
+          <Grid>
+            <Grid.Column width={12}>
+              <Input
+                fluid
+                icon='search'
+                iconPosition='left'
+                placeholder='Search by Item Name...'
+                value={searchText}
+                onChange={(e) => changeSearchText(e.target.value)}
+              />
+            </Grid.Column>
+            <Grid.Column width={4} textAlign='right'>
+              <Button positive icon onClick={() => addItem()}>
+                <Icon name='add' /> &nbsp; Add
             </Button>
-          </Grid.Column>
-        </Grid>
-      </Table.HeaderCell>
+            </Grid.Column>
+          </Grid>
+        </Table.HeaderCell>
+      </tr>
     </Table.Header>
   )
 }
@@ -49,8 +46,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addItem: (item = {}) => dispatch({ type: 'ADD_ITEM', label: item.label, count: item.count }),
-    changeSearchText: (newSearchText) => dispatch({ type: 'UPDATE_SEARCH_TEXT', searchText: newSearchText }),
+    addItem: (item = {}) => dispatch({
+      type: 'ADD_ITEM', 
+      payload: { label: item.label, count: item.count },
+    }),
+    changeSearchText: (newSearchText) => dispatch({
+      type: 'UPDATE_SEARCH_TEXT',
+      payload: { searchText: newSearchText },
+    }),
   }
 }
 

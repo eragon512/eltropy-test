@@ -1,11 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux"
-import Table from 'semantic-ui-react/dist/es/collections/Table'
-import Form from 'semantic-ui-react/dist/es/collections/Form'
-import Menu from 'semantic-ui-react/dist/es/collections/Menu'
-import Message from 'semantic-ui-react/dist/es/collections/Message'
-import Icon from 'semantic-ui-react/dist/es/elements/Icon'
-import Input from 'semantic-ui-react/dist/es/elements/Input'
+import { Table, Form, Menu, Input, Message, Icon } from 'semantic-ui-react'
 
 function ItemsTableBodyComponent(props) {
   const {
@@ -39,9 +34,7 @@ function ItemsTableBodyComponent(props) {
                   error={item.isDuplicate}
                   value={item.label}
                   onChange={(e) => changeItemLabel(itemIndex, e.target.value)}
-                >
-                  <input disabled={!item.isLabelEditable} />
-                </Form.Input>
+                />
               </Form>
               {
                 item.isDuplicate ? (
@@ -87,24 +80,31 @@ function mapStateToProps(state) {
         ...item,
         isDuplicate: itemLabels.indexOf(item.label) !== itemIndex,
       }))
-      .filter(item => search ? item.label.toLowerCase().includes(search) : true),
+      .filter(item => search ? item.label.toLowerCase().includes(search.toLowerCase()) : true),
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    removeItem: (itemIndex) => dispatch({ type: 'REMOVE_ITEM', index: itemIndex }),
-    incrementItemCount: (itemIndex) => dispatch({ type: 'ADD_TO_ITEM_COUNT', index: itemIndex, addCount: 1 }),
-    decrementItemCount: (itemIndex) => dispatch({ type: 'ADD_TO_ITEM_COUNT', index: itemIndex, addCount: -1 }),
+    removeItem: (itemIndex) => dispatch({
+      type: 'REMOVE_ITEM',
+      payload: { index: itemIndex },
+    }),
+    incrementItemCount: (itemIndex) => dispatch({
+      type: 'ADD_TO_ITEM_COUNT', 
+      payload: { index: itemIndex, addCount: 1 },
+    }),
+    decrementItemCount: (itemIndex) => dispatch({
+      type: 'ADD_TO_ITEM_COUNT',
+      payload: { index: itemIndex, addCount: -1 },
+    }),
     changeItemCount: (itemIndex, newItemCount) => dispatch({
       type: 'CHANGE_ITEM_COUNT', 
-      index: itemIndex, 
-      count: newItemCount,
+      payload: { index: itemIndex, count: newItemCount },
     }),
     changeItemLabel: (itemIndex, newItemLabel) => dispatch({
       type: 'CHANGE_ITEM_LABEL',
-      index: itemIndex,
-      label: newItemLabel,
+      payload: { index: itemIndex, label: newItemLabel },
     }),
   }
 }
